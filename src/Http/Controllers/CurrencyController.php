@@ -11,30 +11,31 @@ class CurrencyController extends Controller
 {
     public function calculateCurrency ($amount, $currency) {
 
-        if ($amount && $currency) {
-            $curr = strtoupper($currency);
-    
-            $url = "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml";
-    
-            $dataArray = $this->fetchDataFromEuropeanBank($url);
+        $curr = strtoupper($currency);
+        $url = "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml";
 
-            $existCurrency = Arr::first($dataArray, function ($value, $key) use ($curr) {
-                return $value['currency'] == $curr;
-            });
+        $dataArray = $this->fetchDataFromEuropeanBank($url);
 
-            if (!$existCurrency) {
-                return 'Entered Currency Not Found. Please try for another currency.';
-            } else {
-                return $existCurrency;
-            }
+        $existCurrency = Arr::first($dataArray, function ($value, $key) use ($curr) {
+            return $value['currency'] == $curr;
+        });
 
-        } else {
-            return 'Please pass the valid amount & currency';
+        if (!$existCurrency) {
+            return 'Entered Currency Not Found. Please try for another currency.';
         }
+
+        $eruo = $this->calculation($existCurrency['rate'], $amount);
+
+        $result = $amount. ' ' . $curr . ' = ' . $eruo . ' Euro';
+        return $result;
     }
 
 
-    
+    public function calculation ($rate, $amount) {
+        return $rate * $amount;
+    }
+
+
     public function fetchDataFromEuropeanBank ($url) {
         $xmlString = file_get_contents($url);
 
