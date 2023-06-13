@@ -1,0 +1,14 @@
+{
+    "name": "skylark/currency-converter",
+    "description": "This will return the exchange rate of Euro for the amount and currency that you are given.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hasinur Rahman",
+            "email": "hasinur202@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
