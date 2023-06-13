@@ -15,9 +15,16 @@ class CurrencyController extends Controller
         $xml = simplexml_load_string($xmlString, "SimpleXMLElement", LIBXML_NOCDATA);
         $json = json_encode($xml);
         $array = json_decode($json, true);
+        
+        $datas = $array['Cube']['Cube']['Cube'];
 
-        return $array;
+        $newArray = [];
+        foreach ($datas as $key => $element) {
+            $val = $element['@attributes'];
+            array_push($newArray, $val);
+        }
 
+        return $newArray;
 
     }
 }
