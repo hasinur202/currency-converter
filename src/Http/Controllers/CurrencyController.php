@@ -9,9 +9,12 @@ use SimpleXMLElement;
 
 class CurrencyController extends Controller
 {
-    public function calculateCurrency ($amount, $currency) {
+    public function calculateCurrency ($amount, $currency) {        
+        if (!is_numeric($amount)) {
+            return 'The first parameter must be an integer or decimal.';
+        }
 
-        $curr = strtoupper($currency);
+        $curr = strtoupper(strval($currency));
         $url = "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml";
 
         $dataArray = $this->fetchDataFromEuropeanBank($url);
@@ -21,12 +24,11 @@ class CurrencyController extends Controller
         });
 
         if (!$existCurrency) {
-            return 'Entered Currency Not Found. Please try for another currency.';
+            return 'Your expected currency not found. Please try for another currency.';
         }
 
-        $eruo = $this->calculation($existCurrency['rate'], $amount);
-
-        $result = $amount. ' ' . $curr . ' = ' . $eruo . ' Euro';
+        $result = $this->calculation($existCurrency['rate'], $amount);
+        // $result = $amount. ' ' . $curr . ' = ' . $eruo . ' EURO';
         return $result;
     }
 
