@@ -15,12 +15,5 @@
         "psr-4": {
             "Skylark\\CurrencyConverter\\": "src/"
         }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Skylark\\CurrencyConverter\\CurrencyServiceProvider"
-            ]
-        }
     }
 }
