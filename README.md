@@ -13,3 +13,14 @@ Install the package by the following command,
 Add the provider inside the config/app.php,
 
     Skylark\CurrencyConverter\CurrencyServiceProvider::class,
+
+
+Give the following two parameter to get the Euro currency:
+    (i) amount
+    (ii) currency
+
+Api is:
+    BaseUrl/currency-converter/{amount}/{currency}
+    
+    Example:
+    http://127.0.0.1:8000/currency-converter/100/usd
