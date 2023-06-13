@@ -1,5 +1,6 @@
 <?php
 
-Route::get('currency', function () {
-    return 'currency';
+Route::group(['namespace' => 'Skylark\CurrencyConverter\Http\Controllers'], function() {
+    Route::get('currency', 'CurrencyController@calculateCurrency');
 });
+
