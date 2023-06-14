@@ -11,7 +11,10 @@ class CurrencyController extends Controller
 {
     public function calculateCurrency ($amount, $currency) {        
         if (!is_numeric($amount)) {
-            return 'The first parameter must be an integer or decimal.';
+            return response([
+                'success' => false,
+                'message' => 'The first parameter must be an integer or decimal.'
+            ]);
         }
 
         $curr = strtoupper(strval($currency));
@@ -24,12 +27,19 @@ class CurrencyController extends Controller
         });
 
         if (!$existCurrency) {
-            return 'Your expected currency not found. Please try for another currency.';
+            return response([
+                'success' => false,
+                'message' => 'Your expected currency not found. Please try for another currency.'
+            ]);
         }
 
         $result = $this->calculation($existCurrency['rate'], $amount);
-        // $result = $amount. ' ' . $curr . ' = ' . $eruo . ' EURO';
-        return $result;
+
+        return response([
+            'success' => true,
+            'message' => $amount. ' ' . $curr . ' = ' . $result . ' EURO',
+            'data' => $result
+        ]);
     }
 
 
