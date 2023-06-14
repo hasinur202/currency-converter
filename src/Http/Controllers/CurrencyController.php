@@ -74,7 +74,7 @@ class CurrencyController extends Controller
         $json = json_encode($xml);
         $array = json_decode($json, true);
         
-        $datas = $array['Cube']['Cube']['Cube'];
+        $datas = isset($array['Cube']['Cube']['Cube']) ? $array['Cube']['Cube']['Cube'] : [];
 
         $newArray = [];
         foreach ($datas as $key => $element) {

@@ -10,10 +10,18 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^9.3",
+        "orchestra/testbench": "6.x-dev"
+    },
     "autoload": {
         "psr-4": {
             "Skylark\\CurrencyConverter\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Skylark\\CurrencyConverter\\Tests\\": "tests/"
         }
     }
 }
