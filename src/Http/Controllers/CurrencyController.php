@@ -2,13 +2,25 @@
 
 namespace Skylark\CurrencyConverter\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Arr;
-use SimpleXMLElement;
 
 class CurrencyController extends Controller
 {
+    /**
+    * @response scenario=success {
+    *  "success": true,
+    *  "message": "10 USD = 10.793 EURO",
+    *  "data": 10.793
+    * }
+    * @response scenario=Failed {
+    *  "success": false,
+    *  "message": "Failed to get data"
+    *  "errors"  => "....."
+    * }
+    * @queryParam currency string required. Example: USD.
+    * @queryParam amount integer|decimal required. Here, amount is the target amount that to be exchange in Euro. Example: 100 (100 USD = 107.93 Euro).
+    */
     public function calculateCurrency ($amount, $currency) {        
         if (!is_numeric($amount)) {
             return response([
@@ -43,11 +55,18 @@ class CurrencyController extends Controller
     }
 
 
+    /**
+     * @queryParam rate integer|decimal required. Here, rate is currency rate. Example: 1.08 (1 Euro = 1.08 USD).
+     * @queryParam amount integer|decimal required. Here, amount is the target amount that to be exchange in Euro. Example: 100 (100 USD = 107.93 Euro).
+    */
     public function calculation ($rate, $amount) {
         return $rate * $amount;
     }
 
 
+    /**
+     * @queryParam url string required. url is for fetching the exchange rate of the day from the Duropean Central Bank daily reference. is currency rate. Example: $url = "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml".
+    */
     public function fetchDataFromEuropeanBank ($url) {
         $xmlString = file_get_contents($url);
 
